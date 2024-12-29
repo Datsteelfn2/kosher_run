@@ -29,7 +29,7 @@ while run:
         if player_rect.bottom==336:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_SPACE:
-                    gravity=-20
+                    gravity=-25
 
     screen.fill(yellow)
     gravity+=1
@@ -49,11 +49,19 @@ while run:
         platform_x2 = 800  # Place platform 2 just after platform 1
 
     #constantly drawing the platform, the platform changes because were constantly adding platform_speed to platform_x1 and platform_x2"
+
+    
     screen.blit(platform_surface,(platform_x1,300))
     screen.blit(platform_surface,(platform_x2,300))
     screen.blit(player_surface,player_rect)
-    screen.blit(enemy_surface,enemy_rect)
+
+    enemy_rect.x-=4
+    print(enemy_rect.x)
     
+    screen.blit(enemy_surface,enemy_rect)
+    if enemy_rect.x<=0:
+        enemy_rect.x=800
+        screen.blit(enemy_surface,enemy_rect)
     clock.tick(60) 
 
     pygame.display.update()
