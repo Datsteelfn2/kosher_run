@@ -55,10 +55,10 @@ def menu():
     screen.blit(start_text,start_rect)
 
 def losing_screen():
-    screen.fill("Black")
+    screen.fill("White")
     time=display_score()
     losing_text=font.render("Thanks for playing,You lost",0,"Black")
-    score_text=font.render(f"Your Score:{display_score}",0,"Red")
+    score_text=font.render(f"Your Score:{time}",0,"Red")
     losing_rect=losing_text.get_rect(center=(WIDTH/2,50))
     score_rect=score_text.get_rect(center=(WIDTH/2,100))
     screen.blit(losing_text,losing_rect)
@@ -107,6 +107,7 @@ while run:
     #constantly drawing the platform, the platform changes because were constantly adding platform_speed to platform_x1 and platform_x2"
 
     if game_activity==True:
+        
         screen.blit(platform_surface,(platform_x1,300))
         screen.blit(platform_surface,(platform_x2,300))
         screen.blit(player_surface,player_rect)
@@ -123,6 +124,7 @@ while run:
             game_activity="lost"
             
     if game_activity=="lost":
+       
         losing_screen()
     clock.tick(60)
     pygame.display.update()
