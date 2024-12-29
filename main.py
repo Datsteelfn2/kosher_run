@@ -25,6 +25,10 @@ while run:
     screen.fill(yellow)
     gravity+=1
     player_rect.y+=gravity
+
+    if player_rect.bottom>336:
+        player_rect.bottom=336
+
     screen.blit(platform_surface,(0,300))
     screen.blit(player_surface,player_rect)
     
