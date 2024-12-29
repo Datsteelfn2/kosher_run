@@ -34,10 +34,17 @@ while run:
     if player_rect.bottom>336:
         player_rect.bottom=336
     #infinite movement
-    platform_x1-=platform_speed
+    platform_x1-=platform_speed#makes the platform move to the left
     platform_x2-=platform_speed
+    # check and see if the platform moves off the screen
+    if platform_x1 <= -WIDTH:  # if less than -800
+        platform_x1 = 800  # Place platform 1 just after platform 2
 
+# Check if platform 2 has moved completely off the screen
+    if platform_x2 <= -WIDTH:
+        platform_x2 = 800  # Place platform 2 just after platform 1
 
+    #constantly drawing the platform, the platform changes because were constantly adding platform_speed to platform_x1 and platform_x2"
     screen.blit(platform_surface,(platform_x1,300))
     screen.blit(platform_surface,(platform_x2,300))
     screen.blit(player_surface,player_rect)
