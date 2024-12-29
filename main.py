@@ -27,6 +27,7 @@ gravity=0
 
 #font
 font=pygame.font.Font(None,50)
+menu_font=pygame.font.Font(None,40)
 def display_score():
     time=pygame.time.get_ticks()
     text=font.render(str(time),0,"Black")
@@ -36,8 +37,20 @@ def display_score():
 #menu screen 
 def menu():
     menu_text=font.render("Welcome to Kosher run",0,"Black")
-    menu_rect=menu_text.get_rect(center=(WIDTH/2,50))#just centering the menu text
-    screen.blit(menu_text,menu_rect)
+    context_game_text1=menu_font.render("The objective of the game is to play as blp kosher",0,"Black")
+    context_game_text2=menu_font.render("and jump on the approaching german Flag",0,"Black")
+    
+    menu_rect1=menu_text.get_rect(center=(WIDTH/2,50))#just centering the menu text
+    context_game_rect1=context_game_text1.get_rect(center=(WIDTH/2,150))
+    context_game_rect2=context_game_text2.get_rect(center=(WIDTH/2,200))
+
+    start_text=font.render("Press Space to start",0,"Red")
+    start_rect=start_text.get_rect(center=(WIDTH/2,250))
+
+    screen.blit(menu_text,menu_rect1)
+    screen.blit(context_game_text1,context_game_rect1)
+    screen.blit(context_game_text2,context_game_rect2)
+    screen.blit(start_text,start_rect)
 
 
 game_activity=False
@@ -45,7 +58,9 @@ game_activity=False
 run=True
 while run:
     screen.fill(yellow)
-    menu()
+    if game_activity==False:
+        menu()
+   
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             run=False
