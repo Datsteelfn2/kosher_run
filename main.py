@@ -14,13 +14,24 @@ player_rect=player_surface.get_rect(midbottom=(150,346))
 
 enemy_surface=pygame.image.load("images/germany.png")
 
-enemy_surface=pygame.transform.scale(enemy_surface,(150,200))
+enemy_surface=pygame.transform.scale(enemy_surface,(75,125))
 enemy_rect=enemy_surface.get_rect(midbottom=(700,346))
 platform_x1=0
 platform_x2=WIDTH
 platform_speed=5
 
 gravity=0
+
+#font
+font=pygame.font.Font(None,50)
+def display_score():
+    time=pygame.time.get_ticks()
+    text=font.render(str(time),0,"Black")
+    text_rect=text.get_rect(center=(WIDTH/2,50))
+    screen.blit(text,text_rect)
+
+
+
 run=True
 while run:
     for event in pygame.event.get():
@@ -54,14 +65,14 @@ while run:
     screen.blit(platform_surface,(platform_x1,300))
     screen.blit(platform_surface,(platform_x2,300))
     screen.blit(player_surface,player_rect)
-
+    display_score()
+    # enemy logic
     enemy_rect.x-=4
-    print(enemy_rect.x)
-    
     screen.blit(enemy_surface,enemy_rect)
     if enemy_rect.x<=0:
         enemy_rect.x=800
         screen.blit(enemy_surface,enemy_rect)
-    clock.tick(60) 
 
+
+    clock.tick(60)
     pygame.display.update()
