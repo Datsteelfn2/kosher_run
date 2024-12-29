@@ -30,12 +30,12 @@ gravity=0
 font=pygame.font.Font(None,50)
 menu_font=pygame.font.Font(None,40)
 def display_score():
-    time=pygame.time.get_ticks()
+    time=pygame.time.get_ticks()-start_time
     text=font.render(str(time),0,"Black")
     text_rect=text.get_rect(center=(WIDTH/2,50))
     screen.blit(text,text_rect)
     return time
-
+start_time=0
 #menu screen 
 def menu():
     menu_text=font.render("Welcome to Kosher run",0,"Black")
@@ -64,11 +64,13 @@ def losing_screen():
     screen.blit(losing_text,losing_rect)
     screen.blit(score_text,score_rect)
 game_activity=False
+game_over=False
+
 
 run=True
 while run:
     screen.fill(yellow)
-    if game_activity==False:
+    if game_activity==False and not game_over:
         menu()
    
     for event in pygame.event.get():
@@ -81,6 +83,8 @@ while run:
                     if event.key==pygame.K_SPACE:
                         gravity=-25
         if game_activity==False:
+            if  game_over==True:
+                start_time=int(pygame.time.get_ticks()/1000)
             if event.type== pygame.KEYDOWN:
                 if event.key==pygame.K_SPACE:
                     game_activity=True
@@ -121,10 +125,10 @@ while run:
 
         #collision detecttion
         if player_rect.colliderect(enemy_rect):
-            game_activity="lost"
+            game_activity=False
+            game_over=True
             
-    if game_activity=="lost":
-       
+    if game_over==True:
         losing_screen()
     clock.tick(60)
     pygame.display.update()
