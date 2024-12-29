@@ -4,6 +4,7 @@ WIDTH,HEIGHT=800,400
 screen=pygame.display.set_mode((WIDTH,HEIGHT))
 
 clock=pygame.time.Clock()
+
 platform_surface=pygame.image.load("images/platform.png").convert_alpha()
 platform_surface=pygame.transform.scale(platform_surface,(800,200))
 yellow=(220, 193, 185)
@@ -33,6 +34,7 @@ def display_score():
     text=font.render(str(time),0,"Black")
     text_rect=text.get_rect(center=(WIDTH/2,50))
     screen.blit(text,text_rect)
+    return time
 
 #menu screen 
 def menu():
@@ -52,7 +54,15 @@ def menu():
     screen.blit(context_game_text2,context_game_rect2)
     screen.blit(start_text,start_rect)
 
-
+def losing_screen():
+    screen.fill("Black")
+    time=display_score()
+    losing_text=font.render("Thanks for playing,You lost",0,"Black")
+    score_text=font.render(f"Your Score:{display_score}",0,"Red")
+    losing_rect=losing_text.get_rect(center=(WIDTH/2,50))
+    score_rect=score_text.get_rect(center=(WIDTH/2,100))
+    screen.blit(losing_text,losing_rect)
+    screen.blit(score_text,score_rect)
 game_activity=False
 
 run=True
@@ -110,6 +120,9 @@ while run:
 
         #collision detecttion
         if player_rect.colliderect(enemy_rect):
-            pass
+            game_activity="lost"
+            
+    if game_activity=="lost":
+        losing_screen()
     clock.tick(60)
     pygame.display.update()
