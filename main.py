@@ -22,6 +22,9 @@ platform_speed=5
 
 gravity=0
 
+
+
+
 #font
 font=pygame.font.Font(None,50)
 def display_score():
@@ -30,19 +33,36 @@ def display_score():
     text_rect=text.get_rect(center=(WIDTH/2,50))
     screen.blit(text,text_rect)
 
+#menu screen 
+def menu():
+    menu_text=font.render("Welcome to Kosher run",0,"Black")
+    menu_rect=menu_text.get_rect(center=(WIDTH/2,50))#just centering the menu text
+    screen.blit(menu_text,menu_rect)
 
+
+game_activity=False
 
 run=True
 while run:
+    screen.fill(yellow)
+    menu()
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             run=False
-        if player_rect.bottom==336:
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_SPACE:
-                    gravity=-25
+        if game_activity:
 
-    screen.fill(yellow)
+            if player_rect.bottom==336:
+                if event.type==pygame.KEYDOWN:
+                    if event.key==pygame.K_SPACE:
+                        gravity=-25
+        if game_activity==False:
+            if event.type== pygame.KEYDOWN:
+                if event.key==pygame.K_SPACE:
+                    game_activity=True
+    
+    #intitial menu screen
+
+    #gravity
     gravity+=1
     player_rect.y+=gravity
 
@@ -61,18 +81,20 @@ while run:
 
     #constantly drawing the platform, the platform changes because were constantly adding platform_speed to platform_x1 and platform_x2"
 
-    
-    screen.blit(platform_surface,(platform_x1,300))
-    screen.blit(platform_surface,(platform_x2,300))
-    screen.blit(player_surface,player_rect)
-    display_score()
-    # enemy logic
-    enemy_rect.x-=4
-    screen.blit(enemy_surface,enemy_rect)
-    if enemy_rect.x<=0:
-        enemy_rect.x=800
+    if game_activity==True:
+        screen.blit(platform_surface,(platform_x1,300))
+        screen.blit(platform_surface,(platform_x2,300))
+        screen.blit(player_surface,player_rect)
+        display_score()
+        # enemy logic
+        enemy_rect.x-=4
         screen.blit(enemy_surface,enemy_rect)
+        if enemy_rect.x<=0:
+            enemy_rect.x=800
+            screen.blit(enemy_surface,enemy_rect)
 
-
+        #collision detecttion
+        if player_rect.colliderect(enemy_rect):
+            pass
     clock.tick(60)
     pygame.display.update()
