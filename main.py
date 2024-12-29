@@ -9,9 +9,13 @@ platform_surface=pygame.transform.scale(platform_surface,(800,200))
 yellow=(220, 193, 185)
 
 player_surface=pygame.image.load("images/blp.png")
-player_surface=pygame.transform.scale(player_surface,(300,150))
-player_rect=player_surface.get_rect(midbottom=(150,336))
+player_surface=pygame.transform.scale(player_surface,(150,200))
+player_rect=player_surface.get_rect(midbottom=(150,346))
 
+enemy_surface=pygame.image.load("images/germany.png")
+
+enemy_surface=pygame.transform.scale(enemy_surface,(150,200))
+enemy_rect=enemy_surface.get_rect(midbottom=(700,346))
 platform_x1=0
 platform_x2=WIDTH
 platform_speed=5
@@ -48,6 +52,7 @@ while run:
     screen.blit(platform_surface,(platform_x1,300))
     screen.blit(platform_surface,(platform_x2,300))
     screen.blit(player_surface,player_rect)
+    screen.blit(enemy_surface,enemy_rect)
     
     clock.tick(60) 
 
